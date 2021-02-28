@@ -5,6 +5,13 @@
 # Salesforce cache
 .sfdx/
 .localdevserver/
+.vscode
+
+# illuminatedCloud
+IlluminatedCloud/*
+
+# Scripts
+scripts/*
 
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
