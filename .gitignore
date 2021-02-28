@@ -6,6 +6,8 @@
 .sfdx/
 .localdevserver/
 .vscode
+.idea/*
+
 
 # illuminatedCloud
 IlluminatedCloud/*
