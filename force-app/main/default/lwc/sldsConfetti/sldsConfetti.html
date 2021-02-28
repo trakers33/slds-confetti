@@ -1,0 +1,24 @@
+<!--
+ - Created by trakers on 26.02.21.
+ -->
+
+<!-- Slds Confetti -->
+<template>
+  <lightning-card if:true={_inLayoutEditor} title="Confetti - (Only visible in page editor)"></lightning-card>
+  <lightning-card if:false={isProduction} title="Confetti - Admin Mode (not for production)">
+
+    <lightning-layout>
+      <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small">
+        <lightning-combobox label="Type of Confetti" options={confettiModeList} value={confettiMode} onchange={handleConfettiModeChange}></lightning-combobox>
+      </lightning-layout-item>
+      <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small">
+        <div class="slds-form-element">
+          <label lightning-combobox_combobox="" class="slds-form-element__label">Manual testing</label>
+          <div class="slds-form-element__control">
+            <lightning-button label="Click to test" onclick={handleManualFire}></lightning-button>
+          </div>
+        </div>
+      </lightning-layout-item>
+    </lightning-layout>
+  </lightning-card>
+</template>
