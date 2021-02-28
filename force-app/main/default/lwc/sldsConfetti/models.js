@@ -2,6 +2,7 @@
  * Created by trakers on 28.02.21.
  */
 
+
 export const confetti_models = {
   'firework':function(){
     let duration = 15 * 1000;
