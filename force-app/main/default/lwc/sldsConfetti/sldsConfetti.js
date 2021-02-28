@@ -8,6 +8,11 @@ import { loadScript } from 'lightning/platformResourceLoader';
 import { getRecord } from "lightning/uiRecordApi";
 import {confetti_models} from './models.js';
 import { subscribe, unsubscribe, onError, setDebugFlag, isEmpEnabled } from 'lightning/empApi';
+import userId from '@salesforce/user/Id';
+
+const USER_ID   = 'userId';
+const RECORD_ID = 'recordId';
+const CHANNEL = '/event/Confetti__e';
 
 export default class SldsConfetti extends LightningElement {
   @api recordId;
@@ -25,9 +30,7 @@ export default class SldsConfetti extends LightningElement {
   _inLayoutEditor = false;
 
   @api isPlatformEventEnabled;
-  @api channelFilter;
-  @api channel;
-  channelName = '/event/Confetti__e';
+  @api channelMode = USER_ID;
   subscription = {};
 
   connectedCallback() {
@@ -100,15 +103,20 @@ export default class SldsConfetti extends LightningElement {
 
   messageHandler = (res) => {
     let _res = JSON.parse(JSON.stringify(res));
-    console.log('response',_res);
-    if(_res.data.payload.channel__c == this.channelFilter && this.channelFilter != null){
-      this.executeConfetti();
+    let key = _res.data.payload.Channel__c || '';
+    if(_res.data.payload.Channel__c){
+      if(this.channelMode == USER_ID && key.substr(0,15) == userId){
+        this.executeConfetti();
+      }else if(this.channelMode == RECORD_ID && key.substr(0,15) == this.recordId){
+        this.executeConfetti();
+      }
+
     }
   }
 
 
   registerPlatformEventListener(){
-    subscribe(this.channelName, -1,this.messageHandler).then(response => {
+    subscribe(CHANNEL, -1,this.messageHandler).then(response => {
       console.log('Subscription request sent to: ', JSON.stringify(response.channel));
 
       this.subscription = response;
