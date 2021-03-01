@@ -4,8 +4,8 @@
             "path": "force-app",
             "default": true,
             "package": "slds-confetti",
-            "versionName": "ver 0.1",
-            "versionNumber": "0.1.0.NEXT"
+            "versionName": "ver 1.0",
+            "versionNumber": "1.0.0.NEXT"
         }
     ],
     "namespace": "",
@@ -13,6 +13,8 @@
     "sourceApiVersion": "51.0",
     "packageAliases": {
         "slds-confetti": "0Ho09000000sXwuCAE",
-        "slds-confetti@0.1.0-1": "04t09000000i7gBAAQ"
+        "slds-confetti@0.1.0-1": "04t09000000i7gBAAQ",
+        "slds-confetti@0.1.0-2": "04t09000000i81EAAQ",
+        "slds-confetti@1.0.0-1": "04t09000000i81JAAQ"
     }
 }
