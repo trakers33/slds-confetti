@@ -12,7 +12,8 @@
             <property type="Boolean" name="isProduction" label="Is Production ?"/>
             <property type="String" name="fieldName" label="Field Name"/>
             <property type="String" name="fieldValue" label="Value"/>
-            <property type="String" name="confettiMode" label="Confetti Mode" datasource="default,schoolPride,firework" description="default: uses default confetti, schoolPride: uses School style confetti, firework: uses big firework confetti."/>
+            <property type="String" name="confettiMode" label="Confetti Mode" datasource="default,schoolPride,firework,emoji" description="default: uses default confetti, schoolPride: uses School style confetti, firework: uses big firework confetti, emoji: add a custom emoji"/>
+            <property type="String" name="emoji" label="Confetti Mode" datasource="default,schoolPride,firework" description="Add a custom emoji to be displayed, ex: "/>
             <property type="Boolean" name="isPlatformEventEnabled" label="Is Platform Event listener Enabled ?"/>
             <property type="String" name="channelMode" label="Channel Mode" datasource="userId,recordId" description="(18 char Id) userId: execute confetti if channelField = userId, recordId: execute confetti if channelField = recordId"/>
         </targetConfig>

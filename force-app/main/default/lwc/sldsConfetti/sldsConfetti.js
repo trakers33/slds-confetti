@@ -15,6 +15,17 @@ const RECORD_ID = 'recordId';
 const CHANNEL = '/event/Confetti__e';
 const DEFAULT = 'default';
 
+function isUndefinedOrNull(value) {
+  return value === null || value === undefined;
+}
+function isEmptyString(s) {
+  return (
+    s === undefined ||
+    s === null ||
+    (typeof s === 'string' && s.trim() === '')
+  );
+}
+
 export default class SldsConfetti extends LightningElement {
   @api recordId;
   @api objectApiName;
@@ -22,6 +33,7 @@ export default class SldsConfetti extends LightningElement {
   @api fieldName;
   @api fieldValue;
   @api confettiMode = DEFAULT;
+  @api emoji;
   @api isProduction = false;
 
   _fieldToTrack = null;
@@ -81,6 +93,10 @@ export default class SldsConfetti extends LightningElement {
     return !this.isProduction && !this._inLayoutEditor;
   }
 
+  get isCustomEmojiDisplayed(){
+    return this.confettiMode == 'emoji';
+  }
+
   /** Event Handler **/
   handleManualFire = () => {
     this.executeConfetti();
@@ -102,13 +118,17 @@ export default class SldsConfetti extends LightningElement {
     }
   }
 
+  handleEmojiChange = (event) => {
+    this.emoji = event.currentTarget.value;
+  }
+
   /** Methods **/
 
 
   process = (record) => {
     let currentValue = `${record.fields[this.fieldName].value}`;
     this._trackedValue = currentValue;
-    if(this._previousValue != null && currentValue == this.fieldValue){
+    if(!isUndefinedOrNull(this._previousValue) && currentValue == this.fieldValue){
       this.executeConfetti();
     }
 
@@ -118,7 +138,7 @@ export default class SldsConfetti extends LightningElement {
   }
 
   executeConfetti = () => {
-    (confetti_models.hasOwnProperty(this.confettiMode)?confetti_models[this.confettiMode]:confetti_models[DEFAULT])();
+    (confetti_models.hasOwnProperty(this.confettiMode)?confetti_models[this.confettiMode]:confetti_models[DEFAULT])({emoji:this.emoji});
   }
 
   /** Platform Event listener **/
@@ -126,15 +146,20 @@ export default class SldsConfetti extends LightningElement {
 
   messageHandler = (res) => {
     let _res = JSON.parse(JSON.stringify(res));
-
-    let key = _res.data.payload.Channel__c || '';
-    if(_res.data.payload.Channel__c){
-      if(this.channelMode == USER_ID && key.substr(0,18) == userId){
+    // .substr(0,18) we use only the 18 recordIds
+    let key   = _res.data.payload.Channel__c  || '';
+    let emoji = _res.data.payload.Emoji__c    || null;
+    console.log('messageHandler',_res.data.payload.Channel__c);
+    if(!isEmptyString(_res.data.payload.Channel__c)){
+      /** Emoji from PlatformEvent **/
+      if(!isEmptyString(emoji)){
+        this.emoji = emoji;
+      }
+      if(this.channelMode == USER_ID && key == userId){
         this.executeConfetti();
-      }else if(this.channelMode == RECORD_ID && key.substr(0,18) == this.recordId){
+      }else if(this.channelMode == RECORD_ID && key == this.recordId){
         this.executeConfetti();
       }
-
     }
   }
 

@@ -9,10 +9,12 @@
 
   <!-- Admin mode to do some test -->
   <lightning-card if:true={isAdminModeDisplayed} title="Confetti - Admin Mode (not for production)">
-
     <lightning-layout multiple-rows>
       <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="" padding="around-small">
         <lightning-combobox label="Type of Confetti" options={confettiModeList} value={confettiMode} onchange={handleConfettiModeChange}></lightning-combobox>
+      </lightning-layout-item>
+      <lightning-layout-item if:true={isCustomEmojiDisplayed} size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small">
+        <lightning-input label="Custom Emoji" onchange={handleEmojiChange} value={emoji}></lightning-input>
       </lightning-layout-item>
       <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small">
         <div class="slds-form-element">
