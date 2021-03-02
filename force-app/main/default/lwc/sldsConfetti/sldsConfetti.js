@@ -30,8 +30,8 @@ export default class SldsConfetti extends LightningElement {
   @api recordId;
   @api objectApiName;
 
-  @api fieldName;
-  @api fieldValue;
+  @api fieldName; // fieldName to compare
+  @api fieldValue; // value to be compared with
   @api confettiMode = DEFAULT;
   @api emoji;
   @api isProduction = false;

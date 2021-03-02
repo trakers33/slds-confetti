@@ -1,18 +1,66 @@
-# Salesforce DX Project: Next Steps
+# Salesforce : SLDS Confetti
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+Always wanted to display some confetti like salesforce standard ?
+We now have a simple solution reusable including multiple features:
+- Multiple confetti types
+- Trigger on field value change or Platform Event
+- Compatible with emojis 😀❤️🔥
+## Lightning Web Component - Record Page (for admins)
 
-## How Do You Plan to Deploy Your Changes?
+    todo: Add screenshot or video for admins
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+## Lightning Web Component - Code for Aura
 
-## Configure Your Salesforce DX Project
+```html
+        <c:sldsConfetti 
+              recordId="{!v.recordId}" 
+              isProduction="true" 
+              confettiMode="default"
+              channelMode="recordId">
+        </c:sldsConfetti>
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+```
 
-## Read All About It
+## Lightning Web Component - Code for LWC
+#### Emoji
+```html
+        <c-slds-confetti 
+              record-Id={recordId}
+              fieldName="Status"
+              fieldValue="Closed"
+              confetti-mode="emoji"
+              emoji="🔥"
+              is-production>
+        </c-slds-confetti>
+```
+#### Firework
+```html
+        <c-slds-confetti 
+              record-Id={recordId}
+              fieldName="Status"
+              fieldValue="Closed"
+              confetti-mode="firework"
+              is-production>
+        </c-slds-confetti>
+```
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+## Platform event - Trigger confetti manually
+#### LWC
+```html
+        <c-slds-confetti 
+              record-Id={recordId}
+              confetti-mode="emoji"
+              is-production
+              channel-mode="recordId"
+              is-platform-event-enabled>
+        </c-slds-confetti>
+```
+
+#### Apex
+```apex
+String recordId = 'my_record_id';
+EventBus.publish(new List<Confetti__e>{
+        new Confetti__e(Channel__c=recordId,Emoji__c='🔥')
+});
+```
+
